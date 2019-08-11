@@ -2,38 +2,38 @@ const User = require('../models/users.js');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-//Create and save a new note
+//Create and save a new user
 exports.create = (req, res) => {
     
-    //create a note
+    //create a user
     const user = new User({
         name: req.body.name,
         email: req.body.email,
         password: req.body.password
     });
 
-    //Save Note in database
-    note.save().then((data) => {
+    //Save user in database
+    user.save().then((data) => {
         res.send(data);
     }).catch((err) => {
         res.status(500).send({
-            message: err.message || "Some error occured while creating the note"
+            message: err.message || "Some error occured while creating the user"
         });
     });
 
     //Validate the request
     if(!req.body.email){
         res.status(400).send({
-            message: "Note email can not be empty"
+            message: "user email can not be empty"
         });
     }
 
 };
 
-//Retrive single note by email id
+//Retrive single user by email id
 exports.authenticate = (req, res) => {
     User.findone({email: req.body.email}).then((user) => {
-       //Validate existance of note of given noteId
+       //Validate existance of user of given userId
         if(!user){
             return res.status(404).send({
                 message: 'user not found with email' + req.body.email
